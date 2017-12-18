@@ -122,15 +122,10 @@ function response()
 	if($req)
 	{
 		$res = build_response($req);
-		if(ask_author($req["text"]))
-		{
-			$res["text"] = "dm Viet 7 bit";
-		}
-		else
-		{
-			$res["text"] = ask_eve($req["text"]);
-		}
-
+		$url = 'https://bittrex.com/api/v1.1/public/getmarketsummary?market=btc-'. $res["text"] ; // path to your JSON file
+		$data = file_get_contents($url); // put the contents of the file into a variable
+		$characters = json_decode($data); // decode the JSON feed
+		$res["text"] = $characters->result[0]->Last;
 		reply($req, $res);
 	}
 }
