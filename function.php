@@ -125,7 +125,7 @@ function response()
 		$url = 'https://bittrex.com/api/v1.1/public/getmarketsummary?market=btc-'. $res["text"] ; // path to your JSON file
 		$data = file_get_contents($url); // put the contents of the file into a variable
 		$characters = json_decode($data); // decode the JSON feed
-		$res["text"] = 'Last price : ' . sprintf("%.8f", $characters->result[0]->Last) . 'Hight price: ' . $characters->result[0]->High . ' Volume ' . $characters->result[0]->Volume . ' BaseVolume ' . $characters->result[0]->BaseVolume;
+		$res["text"] = 'Last price : ' . sprintf("%.8f", $characters->result[0]->Last) . ' Hight price: ' . sprintf("%.8f", $characters->result[0]->High) . ' Volume ' . $characters->result[0]->Volume . ' BaseVolume ' . $characters->result[0]->BaseVolume;
 		reply($req, $res);
 	}
 }
