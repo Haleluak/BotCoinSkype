@@ -65,7 +65,7 @@ function get_token()
 function ask_eve($text)
 {
 
-	$default = array("Eve không hiểu từ này", "Dạy eve đi chứ eve không hiểu", "Eve đang buồn, không trả lời được không?", "Eve đang bận học rồi nhé");
+	$default = array("Hdjoker không hiểu từ này", "Dạy Hdjoker đi chứ eve không hiểu", "HDjoker đang buồn, không trả lời được không?", "Hdjoker đang bận học rồi nhé");
 	return $default[rand(0, count($default) - 1)];
 }
 function reply($req, $res)
@@ -110,7 +110,7 @@ function build_response($info)
 }
 function ask_author($text)
 {
-	if(stripos($text, "Author") !== False)
+	if(stripos($text, "Viet") !== False)
 		return true;
 	if(stripos($text, "tac gia") !== False)
 		return true;
@@ -124,7 +124,7 @@ function response()
 		$res = build_response($req);
 		if(ask_author($req["text"]))
 		{
-			$res["text"] = "Tong Vuu la tac gia cua Eve";
+			$res["text"] = "dm Viet 7 bit";
 		}
 		else
 		{
