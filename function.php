@@ -126,7 +126,7 @@ function response()
 		$data = file_get_contents($url); // put the contents of the file into a variable
 		$characters = json_decode($data); // decode the JSON feed
 		//$res["text"] = 'Last price : ' . sprintf("%.8f", $characters->result[0]->Last) . ' <br /> Hight price: ' . sprintf("%.8f", $characters->result[0]->High) . ' <br /> Low price: ' . sprintf("%.8f", $characters->result[0]->Low) .' <br /> Volume: ' . $characters->result[0]->Volume . ' BTC '. ' <br /> BaseVolume: ' . $characters->result[0]->BaseVolume . ' BTC ';
-		$res["text"] = $res;
+		$res["text"] = $res["text"];
 		reply($req, $res);
 	}
 }
