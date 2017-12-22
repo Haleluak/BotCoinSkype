@@ -126,10 +126,16 @@ function response()
 		if (strpos($coin, 'HDjokerCoin') !== false) {
 			$coin = preg_replace('/\s+/', '', str_replace('@HDjokerCoin','',$coin));
 		}
-		$url = 'https://bittrex.com/api/v1.1/public/getmarketsummary?market=btc-'. $coin ; // path to your JSON file
+		if(stripos($text, "Viet") !== False)
+			$url = 'https://bittrex.com/api/v1.1/public/getmarketsummary?market=usdt-btc'
+		else
+			$url = 'https://bittrex.com/api/v1.1/public/getmarketsummary?market=btc-'. $coin ;
 		$data = file_get_contents($url); // put the contents of the file into a variable
 		$characters = json_decode($data); // decode the JSON feed
-		$res["text"] = 'Last price : ' . sprintf("%.8f", $characters->result[0]->Last) . ' <br /> Hight price: ' . sprintf("%.8f", $characters->result[0]->High) . ' <br /> Low price: ' . sprintf("%.8f", $characters->result[0]->Low) . ' <br /> BaseVolume: ' . $characters->result[0]->BaseVolume . ' BTC ';
+		if($characters->success)
+			$res["text"] = 'Last price : ' . sprintf("%.8f", $characters->result[0]->Last) . ' <br /> Hight price: ' . sprintf("%.8f", $characters->result[0]->High) . ' <br /> Low price: ' . sprintf("%.8f", $characters->result[0]->Low) . ' <br /> BaseVolume: ' . $characters->result[0]->BaseVolume . ' BTC ';
+		else
+			$res["text"] = "Xin lỗi bạn qua ngu";
 		reply($req, $res);
 	}
 }
