@@ -127,9 +127,13 @@ function response()
 			$coin = preg_replace('/\s+/', '', str_replace('@HDjokerCoin','',$coin));
 		}
 		if(stripos($coin, "btc") !== False)
-			$url = 'https://bittrex.com/api/v1.1/public/getmarketsummary?market=usdt-btc'
+		{
+			$url = 'https://bittrex.com/api/v1.1/public/getmarketsummary?market=usdt-btc';
+		}
 		else
+		{
 			$url = 'https://bittrex.com/api/v1.1/public/getmarketsummary?market=btc-'. $coin ;
+		}
 		$data = file_get_contents($url); // put the contents of the file into a variable
 		$characters = json_decode($data); // decode the JSON feed
 		if($characters->success)
