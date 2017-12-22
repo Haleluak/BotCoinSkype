@@ -65,7 +65,7 @@ function get_token()
 function ask_eve($text)
 {
 
-	$default = array("Hdjoker không hiểu từ này", "Dạy Hdjoker đi chứ eve không hiểu", "HDjoker đang buồn, không trả lời được không?", "Hdjoker đang bận học rồi nhé");
+	$default = array("Xin lỗi bạn qua ngu", "Bạn ngu do bẩm sinh, may mắn hay tài năng", "Mang não theo nhé -_-");
 	return $default[rand(0, count($default) - 1)];
 }
 function reply($req, $res)
@@ -139,7 +139,7 @@ function response()
 		if($characters->success)
 			$res["text"] = 'Last price : ' . sprintf("%.8f", $characters->result[0]->Last) . ' <br /> Hight price: ' . sprintf("%.8f", $characters->result[0]->High) . ' <br /> Low price: ' . sprintf("%.8f", $characters->result[0]->Low) . ' <br /> BaseVolume: ' . $characters->result[0]->BaseVolume . ' BTC ';
 		else
-			$res["text"] = "Xin lỗi bạn qua ngu";
+			$res["text"] = ask_eve($res["text"]);
 		reply($req, $res);
 	}
 }
