@@ -124,7 +124,7 @@ function response()
 		$res = build_response($req);
 		$coin = $res["text"];
 		if (strpos($coin, 'HDjokerCoin') !== false) {
-			$coin = str_replace('@HDjokerCoin','',$coin);
+			$coin = preg_replace('/\s+/', '', str_replace('@HDjokerCoin','',$coin));
 		}
 		$url = 'https://bittrex.com/api/v1.1/public/getmarketsummary?market=btc-'. $coin ; // path to your JSON file
 		$data = file_get_contents($url); // put the contents of the file into a variable
