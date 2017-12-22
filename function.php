@@ -122,7 +122,7 @@ function response()
 	if($req)
 	{
 		$res = build_response($req);
-		$coin = $res["text"]
+		$coin = $res["text"];
 		if (strpos($coin, 'HDjokerCoin') !== false) {
 			$coin = str_replace('@HDjokerCoin','',$coin);
 		}
