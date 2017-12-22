@@ -126,7 +126,7 @@ function response()
 		if (strpos($coin, 'HDjokerCoin') !== false) {
 			$coin = preg_replace('/\s+/', '', str_replace('@HDjokerCoin','',$coin));
 		}
-		if(stripos($text, "btc") !== False)
+		if(stripos($coin, "btc") !== False)
 			$url = 'https://bittrex.com/api/v1.1/public/getmarketsummary?market=usdt-btc'
 		else
 			$url = 'https://bittrex.com/api/v1.1/public/getmarketsummary?market=btc-'. $coin ;
