@@ -136,8 +136,14 @@ function response()
 		}
 		$data = file_get_contents($url); // put the contents of the file into a variable
 		$characters = json_decode($data); // decode the JSON feed
+		$rate24h =  ($characters->result[0]->Last/$characters->result[0]->PrevDay - 1) * 100 ;
+		$rate24h = $rate24h ? '+' . round(abs($rate24h),1) : $rate24h ;
 		if($characters->success)
-			$res["text"] = 'Last price : ' . sprintf("%.8f", $characters->result[0]->Last) . ' <br /> Hight price: ' . sprintf("%.8f", $characters->result[0]->High) . ' <br /> Low price: ' . sprintf("%.8f", $characters->result[0]->Low) . ' <br /> BaseVolume: ' . $characters->result[0]->BaseVolume . ' BTC ';
+			$res["text"] = 'Last price : ' . sprintf("%.8f", $characters->result[0]->Last) . 
+		' <br /> High price: ' . sprintf("%.8f", $characters->result[0]->High) . 
+		' <br /> Low price: ' . sprintf("%.8f", $characters->result[0]->Low) .
+		' <br /> Rate24h: ' . $rate24h .		
+		' <br /> BaseVolume: ' . $characters->result[0]->BaseVolume . ' BTC ';
 		else
 			$res["text"] = ask_eve($res["text"]);
 		reply($req, $res);
