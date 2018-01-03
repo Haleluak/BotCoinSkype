@@ -124,7 +124,8 @@ function response()
 		$res = build_response($req);
 		$coin = $res["text"];
 		if (strpos($coin, 'HDjokerCoin') !== false) {
-			$coin = preg_replace('/\s+/', '', str_replace('@HDjokerCoin','',$coin));
+			$name = explode(" ", $coin);
+			$coin = $name[1];
 		}
 		if(stripos($coin, "btc") !== False)
 		{
@@ -137,7 +138,7 @@ function response()
 		$data = file_get_contents($url); // put the contents of the file into a variable
 		$characters = json_decode($data); // decode the JSON feed
 		$rate24h =  ($characters->result[0]->Last/$characters->result[0]->PrevDay - 1) * 100 ;
-		$rate24h = $rate24h > 0  ? '+' . round(abs($rate24h), 1) : round($rate24h, 1) ;
+		$rate24h = $rate24h > 0  ? '+' . round(abs($rate24h), 1) . '%' : round($rate24h, 1) . '%';
 		if($characters->success)
 			$res["text"] = 'Last price : ' . sprintf("%.8f", $characters->result[0]->Last) . 
 		' <br /> High price: ' . sprintf("%.8f", $characters->result[0]->High) . 
