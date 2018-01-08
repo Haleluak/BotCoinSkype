@@ -62,7 +62,7 @@ function get_token()
 	$data = file_get_contents($GLOBALS['TOKEN_FILE']);
 	return json_decode($data)->access_token;
 }
-function ask_eve($text)
+function ask_eve()
 {
 
 	$default = array("Xin lỗi bạn qua ngu", "Bạn ngu do bẩm sinh, may mắn hay tài năng", "Mang não theo nhé -_-");
@@ -140,7 +140,7 @@ function bittrexcoin($url)
 		' <br /> BaseVolume: ' . $characters->result[0]->BaseVolume . ' BTC ';
 		else
 		{
-			$result = ask_eve($res["text"]);
+			$result = ask_eve();
 		}
 		return $result;
 }
