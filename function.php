@@ -116,9 +116,38 @@ function ask_author($text)
 		return true;
 	return false;
 }
+function coinmarketcap($coin)
+{
+	$url = 'https://api.coinmarketcap.com/v1/ticker/'. $coin;
+	$data = file_get_contents($url);
+	$characters = json_decode($data);
+	$res["text"] = 'BTC price : ' . sprintf("%.8f", $characters[0]->price_usd) . 
+		' <br /> USD price: ' . sprintf("%.8f", $characters[0]->price_btc) . 
+		' <br /> Rate24h : ' .$characters[0]->percent_change_24h;
+		return $res["text"];
+}
+function bittrexcoin($url)
+{
+		$data = file_get_contents($url); // put the contents of the file into a variable
+		$characters = json_decode($data); // decode the JSON feed
+		$rate24h =  ($characters->result[0]->Last/$characters->result[0]->PrevDay - 1) * 100 ;
+		$rate24h = $rate24h > 0  ? '+' . round(abs($rate24h), 1) . '%' : round($rate24h, 1) . '%';
+		if($characters->success)
+			$result = 'Last price : ' . sprintf("%.8f", $characters->result[0]->Last) . 
+		' <br /> High price: ' . sprintf("%.8f", $characters->result[0]->High) . 
+		' <br /> Low price: ' . sprintf("%.8f", $characters->result[0]->Low) .
+		' <br /> Rate24h: ' . $rate24h .		
+		' <br /> BaseVolume: ' . $characters->result[0]->BaseVolume . ' BTC ';
+		else
+		{
+			$result = ask_eve($res["text"]);
+		}
+		return $result;
+}
 function response()
 {
 	$req = json_decode(file_get_contents('php://input'), true);
+	$list_coin_other = array('bitshares' => 'bts');
 	if($req)
 	{
 		$res = build_response($req);
@@ -127,26 +156,23 @@ function response()
 			$name = explode(" ", $coin);
 			$coin = $name[1];
 		}
-		if(stripos($coin, "btc") !== False)
+		$coinMarket = in_array($coin, $list_coin_other) ? array_search($coin, $list_coin_other) : '');
+		if($coinMarket)
 		{
-			$url = 'https://bittrex.com/api/v1.1/public/getmarketsummary?market=usdt-btc';
+			$res["text"] = coinmarketcap($coinMarket);
 		}
 		else
 		{
-			$url = 'https://bittrex.com/api/v1.1/public/getmarketsummary?market=btc-'. $coin ;
+			if(stripos($coin, "btc") !== False)
+			{
+				$url = 'https://bittrex.com/api/v1.1/public/getmarketsummary?market=usdt-btc';
+			}
+			else
+			{
+				$url = 'https://bittrex.com/api/v1.1/public/getmarketsummary?market=btc-'. $coin ;
+			}
+			$res["text"] = bittrexcoin($url);
 		}
-		$data = file_get_contents($url); // put the contents of the file into a variable
-		$characters = json_decode($data); // decode the JSON feed
-		$rate24h =  ($characters->result[0]->Last/$characters->result[0]->PrevDay - 1) * 100 ;
-		$rate24h = $rate24h > 0  ? '+' . round(abs($rate24h), 1) . '%' : round($rate24h, 1) . '%';
-		if($characters->success)
-			$res["text"] = 'Last price : ' . sprintf("%.8f", $characters->result[0]->Last) . 
-		' <br /> High price: ' . sprintf("%.8f", $characters->result[0]->High) . 
-		' <br /> Low price: ' . sprintf("%.8f", $characters->result[0]->Low) .
-		' <br /> Rate24h: ' . $rate24h .		
-		' <br /> BaseVolume: ' . $characters->result[0]->BaseVolume . ' BTC ';
-		else
-			$res["text"] = ask_eve($res["text"]);
 		reply($req, $res);
 	}
 }
