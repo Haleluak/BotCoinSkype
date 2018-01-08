@@ -123,12 +123,12 @@ function coinmarketcap($coin)
 	$characters = json_decode($data);
 	$key = array_search(strtoupper($coin), array_column($characters, 'symbol'));
 	if($key !== False) {
-		$coin =  $characters[$key];
-		$result = 'USD price : ' . round($coin->price_usd , 2) .' USD'. 
-		' <br /> BTC price: ' . sprintf("%.8f", $coin->price_btc) . 
-		' <br /> Rate24h : ' . $coin->percent_change_24h . '%';
+		$coins =  $characters[$key];
+		$result = 'USD price : ' . round($coins->price_usd , 2) .' USD'. 
+		' <br /> BTC price: ' . sprintf("%.8f", $coins->price_btc) . 
+		' <br /> Rate24h : ' . $coins->percent_change_24h . '%';
 	} else {
-		return $coin;
+		return $key;
 	}
 	return $result;
 }
