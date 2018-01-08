@@ -118,29 +118,45 @@ function ask_author($text)
 }
 function coinmarketcap($coin)
 {
-	$url = 'https://api.coinmarketcap.com/v1/ticker/'. $coin;
+	$url = 'https://api.coinmarketcap.com/v1/ticker/';
 	$data = file_get_contents($url);
 	$characters = json_decode($data);
-	$res["text"] = 'BTC price : ' . sprintf("%.8f", $characters[0]->price_usd) . 
-		' <br /> USD price: ' . sprintf("%.8f", $characters[0]->price_btc) . 
-		' <br /> Rate24h : ' .$characters[0]->percent_change_24h;
-		return $res["text"];
+	$key = array_search($coin, array_column($characters, 'symbol'));
+	if($key !== False) {
+		$coin =  $characters[$key];
+		$result = 'USD price : ' . round($coin->price_usd , 2) .' USD'. 
+		' <br /> BTC price: ' . sprintf("%.8f", $coin->price_btc) . 
+		' <br /> Rate24h : ' . $coin->percent_change_24h . '%';
+	} else {
+		return ask_eve();
+	}
+	return $result;
 }
-function bittrexcoin($url)
+function bittrexcoin($coin)
 {
+		if(stripos($coin, "btc") !== False)
+		{
+			$url = 'https://bittrex.com/api/v1.1/public/getmarketsummary?market=usdt-btc';
+		}
+		else
+		{
+			$url = 'https://bittrex.com/api/v1.1/public/getmarketsummary?market=btc-'. $coin ;
+		}
 		$data = file_get_contents($url); // put the contents of the file into a variable
 		$characters = json_decode($data); // decode the JSON feed
-		$rate24h =  ($characters->result[0]->Last/$characters->result[0]->PrevDay - 1) * 100 ;
-		$rate24h = $rate24h > 0  ? '+' . round(abs($rate24h), 1) . '%' : round($rate24h, 1) . '%';
 		if($characters->success)
+		{
+			$rate24h =  ($characters->result[0]->Last/$characters->result[0]->PrevDay - 1) * 100 ;
+			$rate24h = $rate24h > 0  ? '+' . round(abs($rate24h), 1) . '%' : round($rate24h, 1) . '%';
 			$result = 'Last price : ' . sprintf("%.8f", $characters->result[0]->Last) . 
 		' <br /> High price: ' . sprintf("%.8f", $characters->result[0]->High) . 
 		' <br /> Low price: ' . sprintf("%.8f", $characters->result[0]->Low) .
 		' <br /> Rate24h: ' . $rate24h .		
 		' <br /> BaseVolume: ' . $characters->result[0]->BaseVolume . ' BTC ';
+		}
 		else
 		{
-			$result = ask_eve();
+			return 0;
 		}
 		return $result;
 }
@@ -155,23 +171,14 @@ function response()
 		if (strpos($coin, 'HDjokerCoin') !== false) {
 			$name = explode(" ", $coin);
 			$coin = $name[1];
-		}
-		$coinMarket = in_array($coin, $list_coin_other) ? array_search($coin, $list_coin_other) : '';
-		if($coinMarket)
+		}	
+		if(bittrexcoin($coin))
 		{
-			$res["text"] = coinmarketcap($coinMarket);
+			$res["text"] = bittrexcoin($coin);
 		}
 		else
 		{
-			if(stripos($coin, "btc") !== False)
-			{
-				$url = 'https://bittrex.com/api/v1.1/public/getmarketsummary?market=usdt-btc';
-			}
-			else
-			{
-				$url = 'https://bittrex.com/api/v1.1/public/getmarketsummary?market=btc-'. $coin ;
-			}
-			$res["text"] = bittrexcoin($url);
+			$res["text"] = coinmarketcap($coin);
 		}
 		reply($req, $res);
 	}
