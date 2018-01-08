@@ -121,7 +121,7 @@ function coinmarketcap($coin)
 	$url = 'https://api.coinmarketcap.com/v1/ticker/';
 	$data = file_get_contents($url);
 	$characters = json_decode($data);
-	$key = array_search($coin, array_column($characters, 'symbol'));
+	$key = array_search(strtoupper($coin), array_column($characters, 'symbol'));
 	if($key !== False) {
 		$coin =  $characters[$key];
 		$result = 'USD price : ' . round($coin->price_usd , 2) .' USD'. 
