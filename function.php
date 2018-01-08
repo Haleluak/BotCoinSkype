@@ -128,7 +128,7 @@ function coinmarketcap($coin)
 		' <br /> BTC price: ' . sprintf("%.8f", $coin->price_btc) . 
 		' <br /> Rate24h : ' . $coin->percent_change_24h . '%';
 	} else {
-		return ask_eve();
+		return $coin;
 	}
 	return $result;
 }
