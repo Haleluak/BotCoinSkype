@@ -121,7 +121,7 @@ function coinmarketcap($coin)
 	$url = 'https://api.coinmarketcap.com/v1/ticker/';
 	$data = file_get_contents($url);
 	$characters = json_decode($data);
-	$key = array_search('BTS', array_column($characters, 'symbol'));
+	$key = array_search(strtoupper($coin), array_column($characters, 'symbol'));
 	if($key !== False) {
 		$coins =  $characters[$key];
 		$result = 'USD price : ' . round($coins->price_usd , 2) .' USD'. 
