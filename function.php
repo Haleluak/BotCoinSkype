@@ -156,7 +156,7 @@ function response()
 			$name = explode(" ", $coin);
 			$coin = $name[1];
 		}
-		$coinMarket = in_array($coin, $list_coin_other) ? array_search($coin, $list_coin_other) : '');
+		$coinMarket = in_array($coin, $list_coin_other) ? array_search($coin, $list_coin_other) : '';
 		if($coinMarket)
 		{
 			$res["text"] = coinmarketcap($coinMarket);
