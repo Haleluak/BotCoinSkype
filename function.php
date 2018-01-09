@@ -101,9 +101,9 @@ function build_response($info)
 		"text": "Reply",
 		"attachments": [
 			 {
-				"contentType": "image/png",
-				"contentUrl": "http://aka.ms/Fo983c",
-				"name": "duck-on-a-rock.jpg"
+				"contentType": "image/jpg",
+				"contentUrl": "http://sohanews.sohacdn.com/2013/images-1376406875371.jpg",
+				"name": "images-1376406875371.jpg"
 			}
 		],
 		"replyToId": "activityId"
