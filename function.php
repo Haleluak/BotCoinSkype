@@ -120,15 +120,15 @@ function coinmarketcap($coin)
 {
 	$url = 'https://api.coinmarketcap.com/v1/ticker/';
 	$data = file_get_contents($url);
-	$characters = json_decode($data);
+	$characters = json_decode($data, true);
 	$key = array_search(strtoupper($coin), array_column($characters, 'symbol'));
 	if($key !== False) {
 		$coins =  $characters[$key];
-		$result = 'USD price : ' . round($coins->price_usd , 2) .' USD'. 
+		$result = 'USD price : ' . round($coins->price_usd , 2) .' $'. 
 		' <br /> BTC price: ' . sprintf("%.8f", $coins->price_btc) . 
 		' <br /> Rate24h : ' . $coins->percent_change_24h . '%';
 	} else {
-		return array_column($characters, 'symbol');
+		return 0;
 	}
 	return $result;
 }
