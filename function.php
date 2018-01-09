@@ -68,6 +68,10 @@ function ask_eve()
 	$default = array("Xin lỗi bạn qua ngu", "Bạn ngu do bẩm sinh, may mắn hay tài năng", "Mang não theo nhé -_-");
 	return $default[rand(0, count($default) - 1)];
 }
+function senImage()
+{
+	
+}
 function reply($req, $res)
 {
 	$url = $req["serviceUrl"].'/v3/conversations/'.$req["conversation"]["id"].'/activities/'.$req["id"];
@@ -96,6 +100,11 @@ function build_response($info)
 		},
 		"text": "Reply",
 		"attachments": [
+			 {
+				"contentType": "image/png",
+				"contentUrl": "http://aka.ms/Fo983c",
+				"name": "duck-on-a-rock.jpg"
+			}
 		],
 		"replyToId": "activityId"
 	}';
@@ -128,7 +137,7 @@ function coinmarketcap($coin)
 		' <br /> BTC price: ' . sprintf("%.8f", $coins['price_btc']) . 
 		' <br /> Rate24h : ' . $coins['percent_change_24h'] . '%';
 	} else {
-		return 0;
+		return ask_eve();
 	}
 	return $result;
 }
