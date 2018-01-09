@@ -100,11 +100,6 @@ function build_response($info)
 		},
 		"text": "Reply",
 		"attachments": [
-			 {
-				"contentType": "image/jpg",
-				"contentUrl": "http://sohanews.sohacdn.com/2013/images-1376406875371.jpg",
-				"name": "images-1376406875371.jpg"
-			}
 		],
 		"replyToId": "activityId"
 	}';
