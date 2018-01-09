@@ -179,13 +179,6 @@ function response()
 		else
 		{
 			$res["text"] = coinmarketcap($coin);
-			$res["attachments"] = [
-				{
-					"contentType": "image/png",
-					"contentUrl": "http://sohanews.sohacdn.com/2013/images-1376406875371.jpg",
-					"name": "troll.jpg"
-				}
-			];
 		}
 		reply($req, $res);
 	}
