@@ -124,9 +124,9 @@ function coinmarketcap($coin)
 	$key = array_search(strtoupper($coin), array_column($characters, 'symbol'));
 	if($key !== False) {
 		$coins =  $characters[$key];
-		$result = 'USD price : ' . round($coins->price_usd , 2) .' $'. 
-		' <br /> BTC price: ' . sprintf("%.8f", $coins->price_btc) . 
-		' <br /> Rate24h : ' . $coins->percent_change_24h . '%';
+		$result = 'USD price : ' . round($coins['price_usd'] , 2) .' USD'. 
+		' <br /> BTC price: ' . sprintf("%.8f", $coins['price_btc']) . 
+		' <br /> Rate24h : ' . $coins['percent_change_24h'] . '%';
 	} else {
 		return 0;
 	}
