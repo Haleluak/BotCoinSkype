@@ -179,14 +179,15 @@ function response()
 		{
 			$res["text"] = coinmarketcap($coin);
 		}
-		if (strpos($coin, 'lol') !== false || strpos($coin, 'okay') !== false || strpos($coin, 'troll') !== false || strpos($coin, 'moon') !== false)
+		if (strpos($res["text"], 'lol') !== false || strpos($res["text"], 'okay') !== false || strpos($res["text"], 'troll') !== false || strpos($res["text"], 'moon') !== false)
 		{
+			$default = array("lol.jpg", "okay.jpg", "troll.jpg", "moon.jpg");
+			$icon =  $default[rand(0, count($default) - 1)];
 			$res["attachments"][] = array(
 				 "contentType" => "image/jpg",
-				"contentUrl" => "http://viewcoin.herokuapp.com/images/"  . $coin . '.jpg',
-				"name" => $coin . '.jpg'
-			);
-			$res["text"] = $coin;			
+				"contentUrl" => "http://viewcoin.herokuapp.com/images/"  . $icon,
+				"name" => $icon
+			);			
 		}
 		reply($req, $res);
 	}
