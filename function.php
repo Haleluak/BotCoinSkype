@@ -179,7 +179,7 @@ function response()
 		{
 			$res["text"] = coinmarketcap($coin);
 		}
-		if (strpos($coin, 'lol') !== false || strpos($coin, 'okay') !== false || strpos($coin, 'troll') !== false || strpos($coin, 'moon') !== false) {
+		if (strpos($coin, 'lol') !== false || strpos($coin, 'okay') !== false || strpos($coin, 'troll') !== false || strpos($coin, 'moon') !== false)
 		{
 			$res["attachments"][] = array(
 				 "contentType" => "image/jpg",
