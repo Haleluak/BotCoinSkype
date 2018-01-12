@@ -96,11 +96,7 @@ function build_response($info)
 		},
 		"text": "Reply",
 		"attachments": [
-		{
-			"contentType": "image/jpg",
-			"contentUrl" : "http://ice-apple.com/public/upload/avatars/citizen/27866.jpg",
-			"name": "27866.jpg"
-		}],
+		],
 		"replyToId": "activityId"
 	}';
 	$res = json_decode($response, true);
