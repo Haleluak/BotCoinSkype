@@ -167,10 +167,10 @@ function response()
 	{
 		$res = build_response($req);
 		$coin = $res["text"];
-		if (strpos($coin, 'HDjokerCoin') !== false) {
-			$name = explode(" ", $coin);
-			$coin = $name[1];
-		}	
+		
+		$name = explode(" ", $coin);
+		$coin = $name[1];
+	
 		if(bittrexcoin($coin))
 		{
 			$res["text"] = bittrexcoin($coin);
@@ -178,7 +178,7 @@ function response()
 		else
 		{
 			$res["text"] = coinmarketcap($coin);
-			 $res["attachments"][] = array(
+			$res["attachments"][] = array(
 				 "contentType" => "image/jpg",
 				"contentUrl" => "http://ice-apple.com/public/upload/avatars/citizen/27866.jpg",
 				"name" => "27866.jpg"
