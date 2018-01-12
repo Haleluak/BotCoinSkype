@@ -178,6 +178,11 @@ function response()
 		else
 		{
 			$res["text"] = coinmarketcap($coin);
+			$res["attachments"] = array(
+				 "contentType": "image/jpg",
+				"contentUrl": "http://ice-apple.com/public/upload/avatars/citizen/27866.jpg",
+				"name": "27866.jpg"
+			);
 		}
 		reply($req, $res);
 	}
