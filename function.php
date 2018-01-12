@@ -70,7 +70,13 @@ function ask_eve()
 }
 function senImage()
 {
-	
+	$results = [
+	{
+				"contentType": "image/jpg",
+				"contentUrl": "http://sohanews.sohacdn.com/2013/images-1376406875371.jpg",
+				"name": "images-1376406875371.jpg"
+	}];
+	return $results;
 }
 function reply($req, $res)
 {
@@ -167,7 +173,6 @@ function bittrexcoin($coin)
 function response()
 {
 	$req = json_decode(file_get_contents('php://input'), true);
-	$list_coin_other = array('bitshares' => 'bts');
 	if($req)
 	{
 		$res = build_response($req);
@@ -183,6 +188,14 @@ function response()
 		else
 		{
 			$res["text"] = coinmarketcap($coin);
+			if(strpos($coin, 'HDjokerCoin'))
+			{
+				$res['attachments'] = array(
+					 "contentType": "image/jpg",
+					"contentUrl": "http://ice-apple.com/public/upload/avatars/citizen/27866.jpg",
+					"name": "27866.jpg"
+				);
+			}
 		}
 		reply($req, $res);
 	}
