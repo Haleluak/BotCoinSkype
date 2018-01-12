@@ -167,6 +167,7 @@ function response()
 	{
 		$res = build_response($req);
 		$coin = $res["text"];
+		$troll = $res["text"];
 		if (strpos($coin, 'HDjokerCoin') !== false) {
 			$name = explode(" ", $coin);
 			$coin = $name[1];
@@ -179,7 +180,7 @@ function response()
 		{
 			$res["text"] = coinmarketcap($coin);
 		}
-		if (strpos($res["text"], 'lol') !== false || strpos($res["text"], 'okay') !== false || strpos($res["text"], 'troll') !== false || strpos($res["text"], 'moon') !== false)
+		if (strpos($troll, 'lol') !== false || strpos($troll, 'okay') !== false || strpos($troll, 'troll') !== false || strpos($troll, 'moon') !== false)
 		{
 			$default = array("lol.jpg", "okay.jpg", "troll.jpg", "moon.jpg");
 			$icon =  $default[rand(0, count($default) - 1)];
