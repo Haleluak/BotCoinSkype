@@ -167,10 +167,10 @@ function response()
 	{
 		$res = build_response($req);
 		$coin = $res["text"];
-		
-		$name = explode(" ", $coin);
-		$coin = $name[1];
-	
+		if (strpos($coin, 'HDjokerCoin') !== false) {
+			$name = explode(" ", $coin);
+			$coin = $name[1];
+		}
 		if(bittrexcoin($coin))
 		{
 			$res["text"] = bittrexcoin($coin);
@@ -185,7 +185,8 @@ function response()
 				 "contentType" => "image/jpg",
 				"contentUrl" => "http://viewcoin.herokuapp.com/images/"  . $coin . '.jpg',
 				"name" => $coin . '.jpg'
-			); 
+			);
+			$res["text"] = $coin;			
 		}
 		reply($req, $res);
 	}
