@@ -68,16 +68,6 @@ function ask_eve()
 	$default = array("Xin lỗi bạn qua ngu", "Bạn ngu do bẩm sinh, may mắn hay tài năng", "Mang não theo nhé -_-");
 	return $default[rand(0, count($default) - 1)];
 }
-function senImage()
-{
-	$results = [
-	{
-				"contentType": "image/jpg",
-				"contentUrl": "http://sohanews.sohacdn.com/2013/images-1376406875371.jpg",
-				"name": "images-1376406875371.jpg"
-	}];
-	return $results;
-}
 function reply($req, $res)
 {
 	$url = $req["serviceUrl"].'/v3/conversations/'.$req["conversation"]["id"].'/activities/'.$req["id"];
