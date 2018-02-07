@@ -166,6 +166,7 @@ function response()
 	if($req)
 	{
 		$res = build_response($req);
+		/*
 		$coin = $res["text"];
 		$troll = $res["text"];
 		if (strpos($coin, 'HDjokerCoin') !== false) {
@@ -189,7 +190,8 @@ function response()
 				"contentUrl" => "http://viewcoin.herokuapp.com/images/"  . $icon,
 				"name" => $icon
 			);			
-		}
+		} */
+		$res["text"] = $res["text"];
 		reply($req, $res);
 	}
 }
