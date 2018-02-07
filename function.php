@@ -166,32 +166,6 @@ function response()
 	if($req)
 	{
 		$res = build_response($req);
-		/*
-		$coin = $res["text"];
-		$troll = $res["text"];
-		if (strpos($coin, 'HDjokerCoin') !== false) {
-			$name = explode(" ", $coin);
-			$coin = $name[1];
-		}
-		if(bittrexcoin($coin))
-		{
-			$res["text"] = bittrexcoin($coin);
-		}
-		else
-		{
-			$res["text"] = coinmarketcap($coin);
-		}
-		if (strpos($troll, 'lol') !== false || strpos($troll, 'okay') !== false || strpos($troll, 'troll') !== false || strpos($troll, 'moon') !== false)
-		{
-			$default = array("lol.jpg", "okay.jpg", "troll.jpg", "moon.jpg");
-			$icon =  $default[rand(0, count($default) - 1)];
-			$res["attachments"][] = array(
-				 "contentType" => "image/jpg",
-				"contentUrl" => "http://viewcoin.herokuapp.com/images/"  . $icon,
-				"name" => $icon
-			);			
-		} */
-		$res["text"] = $res["text"];
 		reply($req, $res);
 	}
 }
