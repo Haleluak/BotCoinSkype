@@ -116,48 +116,27 @@ function ask_author($text)
 		return true;
 	return false;
 }
-function coinmarketcap($coin)
-{
-	$url = 'https://api.coinmarketcap.com/v1/ticker/';
-	$data = file_get_contents($url);
-	$characters = json_decode($data, true);
-	$key = array_search(strtoupper($coin), array_column($characters, 'symbol'));
-	if($key !== False) {
-		$coins =  $characters[$key];
-		$result = 'USD price : ' . round($coins['price_usd'] , 2) .' USD'. 
-		' <br /> BTC price: ' . sprintf("%.8f", $coins['price_btc']) . 
-		' <br /> Rate24h : ' . $coins['percent_change_24h'] . '%';
-	} else {
-		return ask_eve();
-	}
-	return $result;
-}
+
 function bittrexcoin($coin)
 {
 		if(stripos($coin, "btc") !== False)
 		{
-			$url = 'https://bittrex.com/api/v1.1/public/getmarketsummary?market=usdt-btc';
+			$url = 'https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT';
 		}
 		else
 		{
-			$url = 'https://bittrex.com/api/v1.1/public/getmarketsummary?market=btc-'. $coin ;
+			$url = 'https://api.binance.com/api/v3/ticker/24hr?symbol='.strtoupper($coin).'BTC' ;
 		}
 		$data = file_get_contents($url); // put the contents of the file into a variable
 		$characters = json_decode($data); // decode the JSON feed
-		if($characters->success)
-		{
-			$rate24h =  ($characters->result[0]->Last/$characters->result[0]->PrevDay - 1) * 100 ;
-			$rate24h = $rate24h > 0  ? '+' . round(abs($rate24h), 1) . '%' : round($rate24h, 1) . '%';
-			$result = 'Last price : ' . sprintf("%.8f", $characters->result[0]->Last) . 
-		' <br /> High price: ' . sprintf("%.8f", $characters->result[0]->High) . 
-		' <br /> Low price: ' . sprintf("%.8f", $characters->result[0]->Low) .
+		$rate24h = $characters["priceChangePercent"];
+        $rate24h = $rate24h > 0  ? '+' . round(abs($rate24h), 1) . '%' : round($rate24h, 1) . '%';
+        $result = 'Last price : ' . sprintf("%.8f", $characters["lastPrice"]) . 
+		' <br /> High price: ' . sprintf("%.8f", $characters["highPrice"]) . 
+		' <br /> Low price: ' . sprintf("%.8f", $characters["lowPrice"]) .
 		' <br /> Rate24h: ' . $rate24h .		
-		' <br /> BaseVolume: ' . $characters->result[0]->BaseVolume . ' BTC ';
-		}
-		else
-		{
-			return 0;
-		}
+		' <br /> BaseVolume: ' . $characters["volume"]. ' BTC ';
+
 		return $result;
 }
 function response()
@@ -172,24 +151,7 @@ function response()
 			$name = explode(" ", $coin);
 			$coin = $name[1];
 		}
-		if(bittrexcoin($coin))
-		{
-			$res["text"] = bittrexcoin($coin);
-		}
-		else
-		{
-			$res["text"] = coinmarketcap($coin);
-		}
-		if (strpos($troll, 'lol') !== false || strpos($troll, 'okay') !== false || strpos($troll, 'troll') !== false || strpos($troll, 'moon') !== false)
-		{
-			$default = array("lol.jpg", "okay.jpg", "troll.jpg", "moon.jpg");
-			$icon =  $default[rand(0, count($default) - 1)];
-			$res["attachments"][] = array(
-				 "contentType" => "image/jpg",
-				"contentUrl" => "http://viewcoin.herokuapp.com/images/"  . $icon,
-				"name" => $icon
-			);			
-		}
+		$res["text"] = bittrexcoin($coin);
 		reply($req, $res);
 	}
 }
