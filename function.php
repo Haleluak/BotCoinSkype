@@ -129,13 +129,13 @@ function bittrexcoin($coin)
 		}
 		$data = file_get_contents($url); // put the contents of the file into a variable
 		$characters = json_decode($data); // decode the JSON feed
-		$rate24h = $characters["priceChangePercent"];
+		$rate24h = $characters->priceChangePercent;
         $rate24h = $rate24h > 0  ? '+' . round(abs($rate24h), 1) . '%' : round($rate24h, 1) . '%';
-        $result = 'Last price : ' . sprintf("%.8f", $characters["lastPrice"]) . 
-		' <br /> High price: ' . sprintf("%.8f", $characters["highPrice"]) . 
-		' <br /> Low price: ' . sprintf("%.8f", $characters["lowPrice"]) .
+        $result = 'Last price : ' . sprintf("%.8f", $characters->lastPrice) . 
+		' <br /> High price: ' . sprintf("%.8f", $characters->highPrice) . 
+		' <br /> Low price: ' . sprintf("%.8f", $characters->lowPrice) .
 		' <br /> Rate24h: ' . $rate24h .		
-		' <br /> BaseVolume: ' . $characters["volume"]. ' BTC ';
+		' <br /> BaseVolume: ' . $characters->volume. ' BTC ';
 
 		return $result;
 }
