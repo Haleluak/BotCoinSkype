@@ -108,13 +108,12 @@ function build_response($info)
 	return $res;
 
 }
-function ask_author($text)
+function get_content($url)
 {
-	if(stripos($text, "Viet") !== False)
-		return true;
-	if(stripos($text, "tac gia") !== False)
-		return true;
-	return false;
+	$data = file_get_contents($url); // put the contents of the file into a variable
+	$characters = json_decode($data); // decode the JSON feed
+
+	return $characters;
 }
 
 function bittrexcoin($coin)
@@ -122,13 +121,19 @@ function bittrexcoin($coin)
 		if(stripos($coin, "btc") !== False)
 		{
 			$url = 'https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT';
+			$usdt = "";
 		}
 		else
 		{
 			$url = 'https://api.binance.com/api/v3/ticker/24hr?symbol='.strtoupper($coin).'BTC' ;
+			$usdt = 'https://api.binance.com/api/v3/ticker/24hr?symbol='.strtoupper($coin).'USDT' ;
 		}
-		$data = file_get_contents($url); // put the contents of the file into a variable
-		$characters = json_decode($data); // decode the JSON feed
+		$characters = get_content($url);
+		$usd = 0;
+		if ($usdt) {
+			$usd = get_content($usdt);
+		}
+
 		$rate24h = $characters->priceChangePercent;
         $rate24h = $rate24h > 0  ? '+' . round(abs($rate24h), 1) . '%' : round($rate24h, 1) . '%';
         $result = 'last: ' . sprintf("%.8f", $characters->lastPrice) . 
@@ -136,6 +141,12 @@ function bittrexcoin($coin)
 		' | low: ' . sprintf("%.8f", $characters->lowPrice) .
 		' | 24h: ' . $rate24h .		
 		' | vl: ' . $characters->quoteVolume. ' BTC ';
+		$result = 'last : ' . sprintf("%.8f", $characters->lastPrice) . 
+		' <br /> high: ' . sprintf("%.8f", $characters->highPrice) . 
+		' <br /> low: ' . sprintf("%.8f", $characters->lowPrice) .
+		' <br /> usdt: ' . $usd .
+		' <br /> 24h: ' . $rate24h .		
+		' <br /> vl: ' . $characters->quoteVolume. ' BTC ';
 
 		return $result;
 }
