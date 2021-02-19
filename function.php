@@ -137,15 +137,10 @@ function bittrexcoin($coin)
 
 		$rate24h = $characters->priceChangePercent;
         $rate24h = $rate24h > 0  ? '+' . round(abs($rate24h), 1) . '%' : round($rate24h, 1) . '%';
-        $result = 'last: ' . sprintf("%.8f", $characters->lastPrice) . 
-		' | hi: ' . sprintf("%.8f", $characters->highPrice) . 
-		' | low: ' . sprintf("%.8f", $characters->lowPrice) .
-		' | 24h: ' . $rate24h .		
-		' | vl: ' . $characters->quoteVolume. ' BTC ';
 		$result = 'last : ' . sprintf("%.8f", $characters->lastPrice) . 
 		' <br /> high: ' . sprintf("%.8f", $characters->highPrice) . 
 		' <br /> low: ' . sprintf("%.8f", $characters->lowPrice) .
-		' <br /> usdt: ' . $usd .
+		' <br /> usdt: ' . round($usd, 1) . '$'.
 		' <br /> 24h: ' . $rate24h .		
 		' <br /> vl: ' . $characters->quoteVolume. ' BTC ';
 
