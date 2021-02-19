@@ -140,9 +140,9 @@ function bittrexcoin($coin)
 		$result = 'last : ' . sprintf("%.8f", $characters->lastPrice) . 
 		' <br /> high: ' . sprintf("%.8f", $characters->highPrice) . 
 		' <br /> low: ' . sprintf("%.8f", $characters->lowPrice) .
-		' <br /> usdt: ' . round($usd, 1) . '$'.
+		' <br /> usdt: ' . round($usd, 2) . '$'.
 		' <br /> 24h: ' . $rate24h .		
-		' <br /> vl: ' . $characters->quoteVolume. ' BTC ';
+		' <br /> vl: ' . $characters->quoteVolume;
 
 		return $result;
 }
