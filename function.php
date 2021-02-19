@@ -132,6 +132,7 @@ function bittrexcoin($coin)
 		$usd = 0;
 		if ($usdt) {
 			$usd = get_content($usdt);
+			$usd = $usd->lastPrice;
 		}
 
 		$rate24h = $characters->priceChangePercent;
